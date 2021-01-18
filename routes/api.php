@@ -14,7 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+$controller = 'App\Http\Controllers';
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-    
+
+
+Route::group(['prefix' => 'auth'], function () use($controller) {
+    Route::group(['middleware' => 'jwt.verify'], function () use($controller) {
+        Route::get('me',$controller.'\Api\AuthController@me');
+    });
+    Route::post('login',$controller.'\Api\AuthController@login');
+});

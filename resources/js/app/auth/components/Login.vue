@@ -15,8 +15,11 @@
                     <div class="form-group">
                         <button class="btn btn-block btn-primary">Masuk</button>
                         <p class="m-2 text-center">Belum punya akun? <router-link :to="{name:'register'}">Daftar</router-link></p>
-                        <p>Atau login dengan:</p>
-                        <a href="/redirect" class="btn btn-primary rounded">Google</a>
+                        <p class="text-center">Atau login dengan:</p>
+                        <div class="text-center d-flex justify-content-center">
+                            <a href="/redirect" class="text-center rounded mx-3"><img width="30" src="images/google.svg" alt=""></a>
+                            <a href="/redirect" class="text-center rounded mx-3"><img width="30" src="images/facebook.svg" alt=""></a>
+                        </div>
                     </div>
                 </form>
             </div>

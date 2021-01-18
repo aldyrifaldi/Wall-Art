@@ -51,13 +51,46 @@
                         <p class="m-2 text-center">Telah memiliki akun? <router-link :to="{name:'login'}">Masuk</router-link></p>
                     </div>
                 </form>
+                <p class="text-center">Atau login dengan:</p>
+                <div class="text-center d-flex justify-content-center">
+                    <a href="/redirect" class="text-center rounded mx-3"><img width="30" src="images/google.svg" alt=""></a>
+                    <a href="/redirect" class="text-center rounded mx-3"><img width="30" src="images/facebook.svg" alt=""></a>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-export default {
+import {mapActions} from "vuex";
 
+export default {
+    data() {
+        return {
+            first_name: null,
+            last_name: null,
+            email: null,
+            phone_number: null,
+            password: null,
+            password_confirmation: null,
+        }
+    },
+    methods: {
+        ...mapActions({
+            login: "auth/login",
+        }),
+        submit() {
+            this.login({
+                payload: {
+                    first_name: this.first_name,
+                    last_name: this.last_name,
+                    email: this.email,
+                    phone_number: this.phone_number,
+                    password: this.password,
+                    password_confirmation: this.password_confirmation,
+                }
+            })
+        }
+    }
 }
 </script>
