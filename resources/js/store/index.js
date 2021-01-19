@@ -10,4 +10,3 @@ export default new Vuex.Store({
         auth: auth
     }
 })
-

@@ -77,10 +77,10 @@ export default {
     },
     methods: {
         ...mapActions({
-            login: "auth/login",
+            register: "auth/register",
         }),
         submit() {
-            this.login({
+            this.register({
                 payload: {
                     first_name: this.first_name,
                     last_name: this.last_name,

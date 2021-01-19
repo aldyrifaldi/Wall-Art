@@ -26,4 +26,5 @@ Route::group(['prefix' => 'auth'], function () use($controller) {
         Route::get('me',$controller.'\Api\AuthController@me');
     });
     Route::post('login',$controller.'\Api\AuthController@login');
+    Route::post('register',$controller.'\Api\AuthController@register');
 });

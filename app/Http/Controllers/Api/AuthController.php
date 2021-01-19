@@ -33,5 +33,18 @@ class AuthController extends Controller
         return $this->respond(auth()->user());
     }
 
-    
+    public function register(Request $request)
+    {
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|max:255|email|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'phone_number' => 'required|integer',
+        ]);
+
+        // if ($validator->fails()) {
+        //     return $this->
+        // }
+    }
 }
