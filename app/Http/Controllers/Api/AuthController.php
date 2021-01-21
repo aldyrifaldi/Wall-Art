@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\ApiCode;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
@@ -43,8 +46,15 @@ class AuthController extends Controller
             'phone_number' => 'required|integer',
         ]);
 
-        // if ($validator->fails()) {
-        //     return $this->
-        // }
+        $request->merge([
+            'password_hashed' => Hash::make($request->password),
+        ]);
+
+        try {
+            User::create($request->only('first_name','last_name','email','phone_number','password_hashed'));
+            return $this->respondNoContent(Response::HTTP_CREATED);
+        } catch (\Throwable $th) {
+            return $this->respondWithError(ApiCode::SOMETHING_WENT_WRONG,Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

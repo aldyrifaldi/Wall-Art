@@ -10,12 +10,13 @@ export const login = ({dispatch,commit},{payload}) => {
 }
 
 export const register = ({dispatch,commit},{payload}) => {
-    console.log(payload);
-    return axios.post('/api/auth/register',payload)
-    .then((res) => {
-        console.log(res.data);
-    })
-    .catch((err) => {
-        console.log(err.response.data);
+    return new Promise((resolve,reject) => {
+        axios.post('/api/auth/register',payload)
+        .then((res) => {
+            resolve(res.data)
+        })
+        .catch((err) => {
+            reject(err.response)
+        })
     })
 }

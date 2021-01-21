@@ -18,9 +18,14 @@ class Controller extends BaseController
         return ResponseBuilder::asSuccess()->withData($data)->withMessage($message)->build();
     }
 
+    public function respondNoContent($http_code)
+    {
+        return ResponseBuilder::asSuccess()->withHttpCode($http_code)->build();
+    }
+
     public function respondWithMessage($message)
     {
-        return ResponseBuilder::asSuccess()->withMessage($message)->withMessage($message)->build();
+        return ResponseBuilder::asSuccess()->withMessage($message)->build();
     }
 
     public function respondWithError($api_code,$http_code)

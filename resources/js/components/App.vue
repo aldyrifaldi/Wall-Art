@@ -1,17 +1,19 @@
 <template>
     <div>
-        <FlashMessage/>
-        <router-view></router-view>
+        <router-view>
+        </router-view>
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 
 import FlashMessage from "./FlashMessage";
 
 export default {
-    data() {
+    components: {
         FlashMessage
-    }
+    },
+
 }
 </script>
