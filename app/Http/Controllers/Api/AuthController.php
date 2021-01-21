@@ -13,8 +13,12 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        $credentials = $request->only('email','password');
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
 
+        $credentials = $request->only('email','password');
         if (!$token = auth('api')->attempt($credentials)) {
             return $this->respondUnAuthenticated(ApiCode::INVALID_CREDENTIALS);
         }

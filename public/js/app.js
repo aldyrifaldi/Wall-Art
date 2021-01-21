@@ -1845,6 +1845,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var _components_FlashMessage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/FlashMessage */ "./resources/js/components/FlashMessage.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1874,7 +1882,74 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+//
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      email: null,
+      password: null,
+      validation_error: []
+    };
+  },
+  components: {
+    FlashMessage: _components_FlashMessage__WEBPACK_IMPORTED_MODULE_0__.default
+  },
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)({
+    login: "auth/login",
+    messages: 'store_layout/flashMessage'
+  })), {}, {
+    submit: function submit() {
+      var _this = this;
+
+      this.login({
+        payload: {
+          email: this.email,
+          password: this.password
+        }
+      }).then(function (res) {
+        // belum ngeset state untuk authentikasi
+        _this.$refs.submitButton.innerHTML = '<i class="fas fa-check"></i> Berhasil';
+        _this.$refs.submitButton.classList = 'btn btn-block btn-success';
+        _this.validation_error = [];
+
+        _this.$router.replace({
+          name: 'home'
+        });
+      })["catch"](function (err) {
+        _this.$refs.submitButton.innerHTML = 'Login';
+        _this.$refs.submitButton.classList = 'btn btn-block btn-primary font-weight-bold';
+
+        switch (err.status) {
+          case 422:
+            _this.validation_error = err.data.data;
+            break;
+
+          case 401:
+            _this.messages({
+              payload: {
+                title: 'Login Failed!',
+                text: err.data.message
+              }
+            });
+
+            break;
+
+          default:
+            _this.messages({
+              payload: {
+                title: 'Oops, Something Went Wrong!',
+                text: err.data.message
+              }
+            });
+
+            break;
+        }
+      });
+    }
+  })
+});
 
 /***/ }),
 
@@ -2054,7 +2129,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _FlashMessage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FlashMessage */ "./resources/js/components/FlashMessage.vue");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers */ "./resources/js/helpers/index.js");
+/* harmony import */ var _FlashMessage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FlashMessage */ "./resources/js/components/FlashMessage.vue");
 //
 //
 //
@@ -2062,11 +2138,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  created: function created() {
+    var _this = this;
+
+    (0,_helpers__WEBPACK_IMPORTED_MODULE_0__.setupInterceptor)(function () {
+      _this.$store.commit("auth/setAuthenticated", false);
+
+      localStorage.removeItem('access_token');
+
+      _this.$router.replace({
+        name: 'login'
+      });
+    });
+  },
   components: {
-    FlashMessage: _FlashMessage__WEBPACK_IMPORTED_MODULE_0__.default
+    FlashMessage: _FlashMessage__WEBPACK_IMPORTED_MODULE_1__.default
   }
 });
 
@@ -2136,6 +2226,17 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js").default;
+var token = localStorage.getItem('access_token');
+_store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch('auth/setToken', token).then(function () {
+  _store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch("auth/fetchUser")["catch"](function () {
+    _store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch('auth/removeToken');
+    _router__WEBPACK_IMPORTED_MODULE_0__.default.replace({
+      name: 'login'
+    });
+  });
+})["catch"](function () {
+  _store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch('auth/removeToken');
+});
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -2223,17 +2324,30 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "login": () => /* binding */ login,
-/* harmony export */   "register": () => /* binding */ register
+/* harmony export */   "register": () => /* binding */ register,
+/* harmony export */   "authenticated": () => /* binding */ authenticated,
+/* harmony export */   "fetchUser": () => /* binding */ fetchUser,
+/* harmony export */   "checkTokenExists": () => /* binding */ checkTokenExists,
+/* harmony export */   "logout": () => /* binding */ logout,
+/* harmony export */   "setToken": () => /* binding */ setToken,
+/* harmony export */   "removeToken": () => /* binding */ removeToken
 /* harmony export */ });
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../helpers */ "./resources/js/helpers/index.js");
+
+
 var login = function login(_ref, _ref2) {
   var dispatch = _ref.dispatch,
       commit = _ref.commit;
   var payload = _ref2.payload;
-  console.log(payload);
-  return axios.post('/api/auth/login', payload).then(function (res) {
-    console.log(res.data);
-  })["catch"](function (err) {
-    console.log(err.response.data);
+  return new Promise(function (resolve, reject) {
+    axios.post('/api/auth/login', payload).then(function (res) {
+      dispatch('setAuthenticated', res.data.data);
+      resolve(res.data);
+    })["catch"](function (err) {
+      reject(err.response);
+    });
   });
 };
 var register = function register(_ref3, _ref4) {
@@ -2247,6 +2361,53 @@ var register = function register(_ref3, _ref4) {
       reject(err.response);
     });
   });
+};
+var authenticated = function authenticated(_ref5, data) {
+  var dispatch = _ref5.dispatch,
+      commit = _ref5.commit;
+  commit('setAuthenticated', true);
+};
+var fetchUser = function fetchUser(_ref6) {
+  var commit = _ref6.commit;
+  return axios.get('api/auth/me').then(function (res) {
+    commit('setAuthenticated', true);
+    commit('setUserData', res.data);
+  })["catch"](function (err) {});
+};
+var checkTokenExists = function checkTokenExists() {
+  var token = localStorage.getItem('access_token');
+
+  if ((0,lodash__WEBPACK_IMPORTED_MODULE_0__.isEmpty)(token)) {
+    return Promise.reject("NO_STORAGE_FOUND");
+  }
+
+  return Promise.resolve(token);
+};
+var logout = function logout(_ref7) {
+  var dispatch = _ref7.dispatch;
+  return axios.post("api/auth/logout").then(function (res) {
+    dispatch('removeToken');
+  })["catch"](function (err) {});
+};
+var setToken = function setToken(_ref8, token) {
+  var commit = _ref8.commit,
+      dispatch = _ref8.dispatch;
+
+  if ((0,lodash__WEBPACK_IMPORTED_MODULE_0__.isEmpty)(token)) {
+    return dispatch('checkTokenExists').then(function (res) {
+      (0,_helpers__WEBPACK_IMPORTED_MODULE_1__.setHttpToken)(token);
+    });
+  }
+
+  commit('setToken', token);
+  (0,_helpers__WEBPACK_IMPORTED_MODULE_1__.setHttpToken)(token);
+};
+var removeToken = function removeToken(_ref9) {
+  var commit = _ref9.commit;
+  commit('setAuthenticated', false);
+  commit('setUserData', null);
+  commit('setToken', null);
+  (0,_helpers__WEBPACK_IMPORTED_MODULE_1__.setHttpToken)(null);
 };
 
 /***/ }),
@@ -2274,7 +2435,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./state */ "./resources/js/app/auth/store/state.js");
 /* harmony import */ var _mutations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./mutations */ "./resources/js/app/auth/store/mutations.js");
-/* harmony import */ var _mutations__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mutations__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _getters__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./getters */ "./resources/js/app/auth/store/getters.js");
 /* harmony import */ var _getters__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_getters__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./actions */ "./resources/js/app/auth/store/actions.js");
@@ -2296,9 +2456,32 @@ __webpack_require__.r(__webpack_exports__);
 /*!**************************************************!*\
   !*** ./resources/js/app/auth/store/mutations.js ***!
   \**************************************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "setAuthenticated": () => /* binding */ setAuthenticated,
+/* harmony export */   "setUserData": () => /* binding */ setUserData,
+/* harmony export */   "setToken": () => /* binding */ setToken
+/* harmony export */ });
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
 
+var setAuthenticated = function setAuthenticated(state, trueOrFalse) {
+  state.user.authenticated = trueOrFalse;
+};
+var setUserData = function setUserData(state, data) {
+  state.user.data = data;
+};
+var setToken = function setToken(state, token) {
+  if ((0,lodash__WEBPACK_IMPORTED_MODULE_0__.isEmpty)(token)) {
+    localStorage.removeItem('access_token');
+    return;
+  }
+
+  localStorage.setItem('access_token', token);
+};
 
 /***/ }),
 
@@ -2313,7 +2496,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  user: {
+    authenticated: false,
+    data: null
+  }
+});
 
 /***/ }),
 
@@ -2400,6 +2588,54 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/helpers/index.js":
+/*!***************************************!*\
+  !*** ./resources/js/helpers/index.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "setHttpToken": () => /* binding */ setHttpToken,
+/* harmony export */   "setupInterceptor": () => /* binding */ setupInterceptor
+/* harmony export */ });
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+
+var setHttpToken = function setHttpToken(token) {
+  if ((0,lodash__WEBPACK_IMPORTED_MODULE_0__.isEmpty)(token)) {
+    window.axios.defaults.headers.common['Authorization'] = null;
+  }
+
+  window.axios.defaults.headers.common['Authorization'] = "Bearer " + token;
+};
+function setupInterceptor(redirector) {
+  window.axios.interceptors.request.use(function (resp) {
+    if (resp.status == 401) {
+      redirector();
+      return resp;
+    } else {
+      return resp;
+    }
+  }, function (err) {
+    var route = err.response.config.route;
+
+    if (route == 'login' || route == 'register') {
+      return Promise.reject(err);
+    }
+
+    if (err.response.status == 401) {
+      redirector();
+      return err;
+    } else {
+      return err;
+    }
+  });
+}
 
 /***/ }),
 
@@ -38285,14 +38521,77 @@ var render = function() {
               }
             },
             [
-              _vm._m(0),
-              _vm._v(" "),
-              _vm._m(1),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "" } }, [_vm._v("Email")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.email,
+                      expression: "email"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.validation_error.email },
+                  attrs: {
+                    type: "text",
+                    name: "email",
+                    placeholder: "Masukkan email"
+                  },
+                  domProps: { value: _vm.email },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.email = $event.target.value
+                    }
+                  }
+                })
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
-                _c("button", { staticClass: "btn btn-block btn-primary" }, [
-                  _vm._v("Masuk")
-                ]),
+                _c("label", { attrs: { for: "" } }, [_vm._v("Password")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.password,
+                      expression: "password"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.validation_error.password },
+                  attrs: {
+                    name: "password",
+                    type: "password",
+                    placeholder: "Masukkan password"
+                  },
+                  domProps: { value: _vm.password },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.password = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c(
+                  "button",
+                  {
+                    ref: "submitButton",
+                    staticClass: "btn btn-block btn-primary"
+                  },
+                  [_vm._v("Masuk")]
+                ),
                 _vm._v(" "),
                 _c(
                   "p",
@@ -38310,42 +38609,19 @@ var render = function() {
                   _vm._v("Atau login dengan:")
                 ]),
                 _vm._v(" "),
-                _vm._m(2)
+                _vm._m(0)
               ])
             ]
           )
         ])
-      ])
-    ]
+      ]),
+      _vm._v(" "),
+      _c("FlashMessage")
+    ],
+    1
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "" } }, [_vm._v("Email")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", placeholder: "Masukkan email" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "" } }, [_vm._v("Password")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "password", placeholder: "Masukkan password" }
-      })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
