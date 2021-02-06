@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import {setupInterceptor} from "../helpers";
 import FlashMessage from "./FlashMessage";
 

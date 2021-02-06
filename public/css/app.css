@@ -10916,3 +10916,81 @@ a.text-dark:focus {
     background-blend-mode: multiply;
 }
 
+
+/* home view */
+.home-top-bar {
+    width: 100%;
+}
+
+.home-text-color-responsive {
+    color: black;
+}
+
+.home-text-size-responsive {
+    font-size: 38px;
+}
+
+.home-text-feature-one {
+    bottom: 80px;
+}
+
+@media only screen and (max-width: 1178px) {
+    .home-text-color-responsive {
+        color: white;
+    }
+
+    .home-text-feature-one {
+        top:280px;
+        color: black;
+    }
+
+    .home-text-align-responsive {
+        text-align: center;
+    }
+    .home-text-size-responsive {
+        font-size: 38px;
+    }
+    .home-top-bar {
+        width: auto!important;
+    }
+
+    .home-btn-color-responsive {
+        background-color: white!important;
+    }
+
+
+    .home-section-one {
+        background: url(/images/auth-background.webp?bb01e1b9586d22816602b3c75eb59b14) no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        background-color: gray!important;
+        background-blend-mode: multiply;
+    }
+}
+
+
+@media only screen and (max-width: 768px) {
+    .home-text-color-responsive {
+        color: white;
+    }
+
+    .home-text-size-responsive {
+        font-size: 38px;
+    }
+    .home-top-bar {
+        width: auto!important;
+    }
+
+    .home-text-align-responsive {
+        text-align: left;
+    }
+
+    .home-section-one {
+        background: url(/images/auth-background.webp?bb01e1b9586d22816602b3c75eb59b14) no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        background-color: gray!important;
+        background-blend-mode: multiply;
+    }
+}
+
