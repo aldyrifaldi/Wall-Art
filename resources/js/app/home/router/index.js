@@ -1,4 +1,4 @@
-import {Home} from "../components";
+import {Home,Theme} from "../components";
 
 export default [
     {
@@ -9,5 +9,14 @@ export default [
             guest: true,
             authenticated: true,
         }
-    }
+    },
+    {
+        path: '/theme',
+        component: Theme,
+        name: 'theme',
+        meta: {
+            guest: true,
+            authenticated: true,
+        }
+    },
 ]

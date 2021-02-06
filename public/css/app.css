@@ -10927,11 +10927,24 @@ a.text-dark:focus {
 }
 
 .home-text-size-responsive {
-    font-size: 38px;
+    font-size: 50px;
 }
 
 .home-text-feature-one {
-    bottom: 80px;
+    bottom: 60px;
+}
+
+.home-text-feature-two {
+    top: 330px;
+}
+
+.home-frame-image-position {
+    right: 65.1px;
+}
+
+.home-no-frame-image-position {
+    right: 65.2px;
+    top: 17.8px;
 }
 
 @media only screen and (max-width: 1178px) {
@@ -10940,15 +10953,15 @@ a.text-dark:focus {
     }
 
     .home-text-feature-one {
-        top:280px;
-        color: black;
+        top:270px;
+        color: black!important;
     }
 
     .home-text-align-responsive {
         text-align: center;
     }
     .home-text-size-responsive {
-        font-size: 38px;
+        font-size: 48px;
     }
     .home-top-bar {
         width: auto!important;
