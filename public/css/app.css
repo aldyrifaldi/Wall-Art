@@ -10926,6 +10926,10 @@ a.text-dark:focus {
     color: black;
 }
 
+.theme-text-color-responsive {
+    color: white;
+}
+
 .home-text-size-responsive {
     font-size: 50px;
 }
@@ -10933,6 +10937,8 @@ a.text-dark:focus {
 .home-text-feature-one {
     bottom: 60px;
 }
+
+
 
 .home-text-feature-two {
     top: 330px;
@@ -10947,9 +10953,49 @@ a.text-dark:focus {
     top: 17.8px;
 }
 
+.theme-text-size-responsive {
+    font-size: 40px;
+}
+
+
+
+@media only screen and (max-width: 1412px) {
+    .theme-frame-size-responsive {
+
+        width: 185px!important;
+    }
+
+    .theme-image-size-responsive {
+        width: 172px!important;
+    }
+
+    .theme-less-image-size-responsive {
+        width: 178px!important;
+    }
+}
+
+
 @media only screen and (max-width: 1178px) {
     .home-text-color-responsive {
         color: white;
+    }
+
+
+    .theme-frame-size-responsive {
+
+        width: 185px!important;
+    }
+
+    .theme-image-size-responsive {
+        width: 172px!important;
+    }
+
+    .theme-less-image-size-responsive {
+        width: 178px!important;
+    }
+
+    .theme-text-align-responsive {
+        text-align: center!important;
     }
 
     .home-text-feature-one {
@@ -10963,6 +11009,9 @@ a.text-dark:focus {
     .home-text-size-responsive {
         font-size: 48px;
     }
+    .theme-text-size-responsive {
+        font-size: 40px;
+    }
     .home-top-bar {
         width: auto!important;
     }
@@ -10973,6 +11022,14 @@ a.text-dark:focus {
 
 
     .home-section-one {
+        background: url(/images/auth-background.webp?bb01e1b9586d22816602b3c75eb59b14) no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        background-color: gray!important;
+        background-blend-mode: multiply;
+    }
+
+    .theme-section-one {
         background: url(/images/auth-background.webp?bb01e1b9586d22816602b3c75eb59b14) no-repeat;
         background-attachment: fixed;
         background-size: cover;
@@ -10997,6 +11054,9 @@ a.text-dark:focus {
     .home-text-align-responsive {
         text-align: left;
     }
+    .theme-text-align-responsive {
+        text-align: left!important;
+    }
 
     .home-section-one {
         background: url(/images/auth-background.webp?bb01e1b9586d22816602b3c75eb59b14) no-repeat;
@@ -11004,6 +11064,10 @@ a.text-dark:focus {
         background-size: cover;
         background-color: gray!important;
         background-blend-mode: multiply;
+    }
+
+    .theme-text-size-responsive {
+        font-size: 38px;
     }
 }
 
