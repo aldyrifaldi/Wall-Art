@@ -1883,6 +1883,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -1903,6 +1905,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     submit: function submit() {
       var _this = this;
 
+      this.$refs.submitButton.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
       this.login({
         payload: {
           email: this.email,
@@ -1910,7 +1913,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }).then(function (res) {
         // belum ngeset state untuk authentikasi
-        _this.$refs.submitButton.innerHTML = '<i class="fas fa-check"></i> Berhasil';
+        _this.$refs.submitButton.innerHTML = '<i class="fas fa-check"></i> Success';
         _this.$refs.submitButton.classList = 'btn btn-block btn-success';
         _this.validation_error = [];
 
@@ -1918,7 +1921,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           name: 'home'
         });
       })["catch"](function (err) {
-        _this.$refs.submitButton.innerHTML = 'Login';
+        _this.$refs.submitButton.innerHTML = 'Masuk';
         _this.$refs.submitButton.classList = 'btn btn-block btn-primary font-weight-bold';
 
         switch (err.status) {
@@ -38876,117 +38879,138 @@ var render = function() {
     "div",
     { staticClass: "full-height auth-screen d-flex justify-content-center" },
     [
-      _c("div", { staticClass: "card align-self-center p-3" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("h4", { staticClass: "text-center font-weight-bold" }, [
-            _vm._v("GALLERY PHOTO")
-          ]),
-          _vm._v(" "),
-          _c(
-            "form",
-            {
-              on: {
-                submit: function($event) {
-                  $event.preventDefault()
-                  return _vm.submit($event)
+      _c(
+        "div",
+        {
+          staticClass: "card align-self-center p-3",
+          staticStyle: { width: "70vh" }
+        },
+        [
+          _c("div", { staticClass: "card-body" }, [
+            _c("h4", { staticClass: "text-center h1 font-weight-bold" }, [
+              _vm._v("DHunt")
+            ]),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.submit($event)
+                  }
                 }
-              }
-            },
-            [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "" } }, [_vm._v("Email")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.email,
-                      expression: "email"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  class: { "is-invalid": _vm.validation_error.email },
-                  attrs: {
-                    type: "text",
-                    name: "email",
-                    placeholder: "Masukkan email"
-                  },
-                  domProps: { value: _vm.email },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              },
+              [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "" } }, [_vm._v("Email")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.email,
+                        expression: "email"
                       }
-                      _vm.email = $event.target.value
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "" } }, [_vm._v("Password")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.password,
-                      expression: "password"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  class: { "is-invalid": _vm.validation_error.password },
-                  attrs: {
-                    name: "password",
-                    type: "password",
-                    placeholder: "Masukkan password"
-                  },
-                  domProps: { value: _vm.password },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                    ],
+                    staticClass: "form-control",
+                    class: { "is-invalid": _vm.validation_error.email },
+                    attrs: {
+                      type: "text",
+                      name: "email",
+                      placeholder: "Masukkan email"
+                    },
+                    domProps: { value: _vm.email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.email = $event.target.value
                       }
-                      _vm.password = $event.target.value
                     }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c(
-                  "button",
-                  {
-                    ref: "submitButton",
-                    staticClass: "btn btn-block btn-primary"
-                  },
-                  [_vm._v("Masuk")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "p",
-                  { staticClass: "m-2 text-center" },
-                  [
-                    _vm._v("Belum punya akun? "),
-                    _c("router-link", { attrs: { to: { name: "register" } } }, [
-                      _vm._v("Daftar")
-                    ])
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("p", { staticClass: "text-center" }, [
-                  _vm._v("Atau login dengan:")
+                  }),
+                  _vm._v(" "),
+                  _vm.validation_error.email
+                    ? _c("small", { staticClass: "text-danger" }, [
+                        _vm._v(_vm._s(_vm.validation_error.email[0]))
+                      ])
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
-                _vm._m(0)
-              ])
-            ]
-          )
-        ])
-      ]),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "" } }, [_vm._v("Password")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.password,
+                        expression: "password"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: { "is-invalid": _vm.validation_error.password },
+                    attrs: {
+                      name: "password",
+                      type: "password",
+                      placeholder: "Masukkan password"
+                    },
+                    domProps: { value: _vm.password },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.password = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.validation_error.password
+                    ? _c("small", { staticClass: "text-danger" }, [
+                        _vm._v(_vm._s(_vm.validation_error.password[0]))
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "button",
+                    {
+                      ref: "submitButton",
+                      staticClass: "btn btn-block btn-primary"
+                    },
+                    [_vm._v("Masuk")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "p",
+                    { staticClass: "m-2 text-center" },
+                    [
+                      _vm._v("Belum punya akun? "),
+                      _c(
+                        "router-link",
+                        { attrs: { to: { name: "register" } } },
+                        [_vm._v("Daftar")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-center" }, [
+                    _vm._v("Atau login dengan:")
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(0)
+                ])
+              ]
+            )
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c("FlashMessage")
     ],
@@ -39060,7 +39084,7 @@ var render = function() {
       _c("div", { staticClass: "card align-self-center p-3" }, [
         _c("div", { staticClass: "card-body" }, [
           _c("h3", { staticClass: "text-center font-weight-bold" }, [
-            _vm._v("GALLERY PHOTO")
+            _vm._v("DHunt")
           ]),
           _vm._v(" "),
           _c(

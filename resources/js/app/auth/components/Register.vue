@@ -2,7 +2,7 @@
     <div class="full-height auth-screen d-flex justify-content-center">
         <div class="card align-self-center p-3" >
             <div class="card-body">
-                <h3 class="text-center font-weight-bold">GALLERY PHOTO</h3>
+                <h3 class="text-center font-weight-bold">DHunt</h3>
                 <form class="mt-3" @submit.prevent="submit">
                     <div class="row">
                         <div class="col-md-6">
