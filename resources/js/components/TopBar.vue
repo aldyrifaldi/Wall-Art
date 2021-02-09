@@ -17,10 +17,10 @@
                 <li class="nav-item">
                     <router-link :to="{name: 'testimonials'}" class="nav-link" href="#">Testimonials</router-link>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" v-if="!user.authenticated">
                     <router-link :to="{name:'login'}" class="nav-link">Login</router-link>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" v-if="!user.authenticated">
                     <router-link :to="{name:'register'}" class="nav-link">Register</router-link>
                 </li>
             </ul>
@@ -28,11 +28,17 @@
     </nav>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
     props: ['navClass','navStyle','navBrandClass','navBrandStyle'],
     data: () => {
         return {
         }
+    },
+    computed: {
+        ...mapGetters({
+            user: 'auth/user'
+        })
     }
 }
 </script>

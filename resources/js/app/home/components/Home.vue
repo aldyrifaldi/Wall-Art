@@ -16,7 +16,7 @@
                             </div>
                         </div>
                         <div>
-                            <div class="btn-group d-xl-block d-none mt-3 btn-group-md">
+                            <div class="btn-group d-xl-block d-none mt-3 btn-group-md" v-if="!user.authenticated">
                                 <router-link :to="{name:'login'}" class="btn btn-dark rounded-0">Login</router-link>
                                 <router-link :to="{name:'register'}" class="btn rounded-0 btn-light">Register</router-link>
                             </div>
@@ -41,6 +41,8 @@
 
 
 <script>
+import {mapActions,mapGetters} from "vuex";
+
 import TopBar from "../../../components/TopBar";
 export default {
     data: () => {
@@ -49,6 +51,11 @@ export default {
     },
     components: {
         TopBar
+    },
+    computed: {
+        ...mapGetters({
+            user: 'auth/user'
+        })
     }
 }
 </script>

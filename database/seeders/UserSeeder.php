@@ -22,5 +22,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin'),
             'phone_number' => '0852424335232'
         ]);
+
+        $user->assignRole('admin');
     }
 }

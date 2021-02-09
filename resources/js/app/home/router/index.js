@@ -6,8 +6,8 @@ export default [
         component: Home,
         name: 'home',
         meta: {
-            guest: true,
-            authenticated: true,
+            guest: false,
+            authenticated: false,
         }
     },
     {
@@ -15,8 +15,8 @@ export default [
         component: Theme,
         name: 'theme',
         meta: {
-            guest: true,
-            authenticated: true,
+            guest: false,
+            authenticated: false,
         }
     },
 ]

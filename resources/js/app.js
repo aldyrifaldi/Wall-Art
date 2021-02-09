@@ -7,19 +7,18 @@ import store from "./store";
  */
 
 require('./bootstrap');
+// console.log(store.state);
 
 window.Vue = require('vue').default;
 let token = localStorage.getItem('access_token')
 
-store.dispatch('auth/setToken',token).then(() => {
+store.dispatch('auth/setToken',token)
+.then(() => {
     store.dispatch("auth/fetchUser")
-    .catch(() => {
-        store.dispatch('auth/removeToken')
-        router.replace({name: 'login'})
-    })
 })
 .catch(() => {
     store.dispatch('auth/removeToken')
+    router.replace({name: 'login'})
 })
 
 /**
@@ -43,6 +42,6 @@ Vue.component('app', require('./components/App.vue').default);
 
 const app = new Vue({
     el: '#app',
-    router,
+    router: router(store),
     store,
 });

@@ -10,16 +10,15 @@ import {setupInterceptor} from "../helpers";
 import FlashMessage from "./FlashMessage";
 
 export default {
-    created: function() {
+     created: function() {
         setupInterceptor(() => {
             this.$store.commit("auth/setAuthenticated",false)
-            localStorage.removeItem('access_token')
-            this.$router.replace({name: 'login'})
-        })
+            localStorage.removeItem("access_token");
+            this.$router.replace("/login");
+        });
     },
     components: {
         FlashMessage
     },
-
 }
 </script>

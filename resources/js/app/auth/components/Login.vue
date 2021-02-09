@@ -63,7 +63,7 @@ export default {
                 this.$refs.submitButton.innerHTML = '<i class="fas fa-check"></i> Success'
                 this.$refs.submitButton.classList = 'btn btn-block btn-success'
                 this.validation_error = []
-                this.$router.replace({name: 'home'})
+                this.$router.replace({name:"dashboard"})
             })
             .catch((err) => {
                 this.$refs.submitButton.innerHTML = 'Masuk'
@@ -80,7 +80,6 @@ export default {
                             }
                         })
                         break;
-
                     default:
                         this.messages({
                             payload: {

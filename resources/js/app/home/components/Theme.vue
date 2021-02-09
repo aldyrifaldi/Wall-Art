@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-5 theme-section-one col-12 bg-dark d-flex justify-content-center align-items-center" style="height:100vh">
-                    <div class="">
+                    <div class="container">
                         <h1 class="display-4 theme-text-size-responsive theme-text-align-responsive text-left text-white ">Many different theme is available and ready to order</h1>
                         <div class="mt-3 theme-text-align-responsive">
                             <button class="btn btn-lg btn-light theme-text-align-responsive" style="border-radius:0px">Order Now!</button>
@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="col-lg-7 col-12 mt-5">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center mt-5">
                         <div class="col-md-4 col-6 col-lg-4 col-xl-4 text-center my-4">
                             <div class="d-flex justify-content-center align-items-center">
                                 <img src="img/uploads/image1.jpg" class="img-fluid img-thumbnail theme-image-size-responsive" style="padding:2rem;margin-top:-18px;margin-left:-5px" width="240" alt="">

@@ -9,6 +9,7 @@ export const setUserData = (state,data) => {
 }
 
 export const setToken = (state,token) => {
+    console.log('bambang');
     if (isEmpty(token)) {
         localStorage.removeItem('access_token')
         return

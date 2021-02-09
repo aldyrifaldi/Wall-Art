@@ -37,7 +37,9 @@ class AuthController extends Controller
 
     public function me()
     {
-        return $this->respond(auth()->user());
+        $user = User::with('roles')->find(auth()->user()->id);
+        
+        return $this->respond($user);
     }
 
     public function register(Request $request)
@@ -55,7 +57,8 @@ class AuthController extends Controller
         ]);
 
         try {
-            User::create($request->only('first_name','last_name','email','phone_number','password_hashed'));
+            $user = User::create($request->only('first_name','last_name','email','phone_number','password_hashed'));
+            $user->assignRole('customer');
             return $this->respondNoContent(Response::HTTP_CREATED);
         } catch (\Throwable $th) {
             return $this->respondWithError(ApiCode::SOMETHING_WENT_WRONG,Response::HTTP_INTERNAL_SERVER_ERROR);

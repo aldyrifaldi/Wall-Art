@@ -1,19 +1,18 @@
-import { isEmpty, reject } from "lodash"
+import { isEmpty } from "lodash"
 import { setHttpToken } from "../../../helpers"
 
 export const login = ({dispatch,commit},{payload}) => {
-    return new Promise((resolve,reject) => {
-        axios.post('/api/auth/login',payload)
-            .then((res) => {
-
-                dispatch('setAuthenticated',res.data.data)
-
-                resolve(res.data)
+    return axios.post('/api/auth/login',payload)
+        .then((res) => {
+            dispatch('setToken',res.data.data.token)
+            .then(() => {
+                dispatch('fetchUser')
             })
-            .catch((err) => {
-                reject(err.response)
-            })
-    })
+            return Promise.resolve()
+        })
+        .catch((err) => {
+            return Promise.reject()
+        })
 }
 
 export const register = ({dispatch,commit},{payload}) => {
@@ -32,15 +31,15 @@ export const authenticated = ({dispatch,commit},data) => {
     commit('setAuthenticated',true)
 }
 
-export const fetchUser = ({commit}) => {
-    return axios.get('api/auth/me')
-        .then((res) => {
-            commit('setAuthenticated',true)
-            commit('setUserData',res.data)
-        })
-        .catch((err) => {
-
-        })
+export const fetchUser = ({commit,dispatch}) => {
+    axios.get('api/auth/me')
+    .then((res) => {
+        commit('setAuthenticated',true)
+        commit('setUserData',res.data.data.item)
+    })
+    .catch((err) => {
+        dispatch('removeToken')
+    })
 }
 
 
@@ -48,8 +47,9 @@ export const checkTokenExists = () => {
     const token = localStorage.getItem('access_token')
     if (isEmpty(token)) {
         return Promise.reject("NO_STORAGE_FOUND")
+    } else {
+        return Promise.resolve(token)
     }
-    return Promise.resolve(token)
 }
 
 export const logout = ({dispatch}) => {
@@ -60,6 +60,11 @@ export const logout = ({dispatch}) => {
     .catch((err) => {
 
     })
+}
+
+export const setAuthenticated = ({commit,dispatch},data) => {
+    commit('setAuthenticated',true)
+    commit('setUserData',data)
 }
 
 
